@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+    Student list
+{% endblock %}
+
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-block">
+                    {% if success %}
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <strong> {{ success }} </strong>
+                        </div>
+                    {% endif %}
+                    <div class="pull-left">
+                        <i class="fa fa-list"></i>
+                        Student list
+                    </div>
+                    <div class="pull-right">
+                        <a href="{% url 'get_full_list' %}" class="btn btn-info">Get full list</a>
+                        <a href="{% url 'all-student-send-sms' %}" class="btn btn-warning">
+                            Send sms all student</a>
+                        <a href="{% url 'new' %}">
+                        <button type="button" class="btn btn-primary" id="add-reseller">Add Student
+                        </button>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-block">
+                <table class="table table-striped table-hover" id="student-table">
+                    <thead>
+                    <tr>
+                        <th style="text-align:left;white-space:nowrap"><span style="">Name</span></th>
+                        <th style="text-align:left;white-space:nowrap">Roll</th>
+                        <th style="text-align:left;white-space:nowrap">Class</th>
+                        <th style="text-align:left;white-space:nowrap">Contact</th>
+                        <th style="text-align:center;white-space:nowrap;"><span style="margin-right:-160px">Action</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                        <td style="text-align:left;white-space:nowrap">{{ student.full_name }}</td>
+                        <td style="text-align:left;white-space:nowrap">{{ student.student_id }}</td>
+                        <td style="text-align:left;white-space:nowrap">{{ student.student_level }}</td>
+                        <td style="text-align:left;white-space:nowrap">{{ student.contact }}</td>
+                        <td style="text-align:right;white-space:nowrap">
+                            <a href="{% url 'student_detail' student.pk %}">
+                            <button class="btn btn-info details" value="{{ student.id }}">Details
+                            </button>
+                            </a>
+
+                            <a href="{% url 'student_edit' student.pk %}">
+                            <button class="btn btn-warning" value="{{ student.id }}">Edit
+                            </button>
+                            </a>
+                            <a href="{% url 'student-send-sms' student.id %}" class="btn btn-success send_sms">Send SMS</a>
+
+                            <a href="{% url 'student_delete' student.id %}"  class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')">
+                            <!--a ... onclick="return confirm('Are you sure you want to delete this?')">Delete</a>-->
+                            Delete
+                            </a>
+
+
+
+                            <!-- Split button
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-danger">Action</button>
+                              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                              </ul>
+                            </div>
+                            -->
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#student-table").DataTable({
+                dom: 'lBftipr',
+                "order": [[1, "asc"]]
+            });
+
+        });
+
+    </script>
+{% endblock %}
+

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="pull-left">
+                        <i class="fa fa-list"></i>
+                        Edit Message
+                    </div>
+                    <div class="pull-right">
+                        <a href="{% url 'sms-list' %}"class="btn btn-danger" id="add-students">
+                            Back
+                        </a>
+                    </div>
+                </div>
+                <div class="card-block">
+                     <form action="" method="post">
+                    {% csrf_token %}
+                        {% for m in message %}
+                            <div class="form-group row">
+                                <label class="form-control-label col-md-2">{{ m.label }}</label>
+                                <div class="col-md-10">
+                                    {{ m }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="offset-md-2 col-md-7" id="text-count"></div>
+                        <button type="submit" name="save" class="btn btn-success pull-right">update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            var text_Max = 159;
+            $('#text-count').html(text_Max + ' characters remained for sms');
+            $('#id_text').keyup(function () {
+                var text_Length = $('#id_text').val().length;
+                var text_Remain = text_Max - text_Length;
+                $('#text-count').html(text_Remain + ' characters remained for sms');
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}
+    Student detail
+{% endblock %}
+
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+
+{% block content %}
+    <div class="card">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    {% if password %}
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <strong> {{ password }} </strong>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if password1 %}
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <strong> {{ password1 }} </strong>
+                    {% endif %}
+                </div>
+                <div class="card-header">
+                    <strong>Details of {{ student.full_name }}</strong>
+                    <a href="{% url 'student_list' %}">
+                        <button type="button" class="btn btn-outline-danger pull-right" id="student-list">Back
+                        </button>
+                    </a>
+                   <button type="button" class="btn btn-info send_sms pull-right" style="margin-right:10px;" name="send_sms" data-toggle="modal"
+                         data-target="#myModal" id="send_sms">Change Password
+                   </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-block">
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-sm-9">
+
+                <!--This is for student details-->
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <strong>Username</strong>
+                        </div>
+                        <div class="col-md-8 col-md-8 col-sm-8">
+                            :&nbsp;{{ student.full_name }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Roll</strong>
+                        </div>
+                        <div class="col-md-8">
+                            :&nbsp;{{ student.student_id }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Date of birth</strong>
+                        </div>
+                        <div class="col-md-8">
+                            :&nbsp;{{ student.dob }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Class</strong>
+                        </div>
+                        <div class="col-md-8">
+                            :&nbsp;{{ student.student_level }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Admission year</strong>
+                        </div>
+                        <div class="col-md-8">
+                            :&nbsp;{{ student.admission_year }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Father's name</strong>
+                        </div>
+                        <div class="col-md-8">
+                            :&nbsp;{{ student.father_name }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Mother's name</strong>
+                        </div>
+                        <div class="col-md-8">
+                            :&nbsp;{{ student.mother_name }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Contact</strong>
+                        </div>
+                        <div class="col-md-8">
+                            :&nbsp;{{ student.contact }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Address</strong>
+                        </div>
+                        <div class="col-md-8">
+                            :&nbsp;{{ student.address }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Remark</strong>
+                        </div>
+                        <div class="col-md-8">
+                            :&nbsp;{{ student.extra }}
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--This is for student image-->
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <img width="100%" src="{{ student.image.url }}" alt="Student image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!--Delete Student modal-->
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">Change Password</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <form action="{% url 'student_detail' student.id %}" method="post">
+                                    {% csrf_token %}
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1">Password</label>
+                                    <input type="password" class="form-control" name="pass1" id="password" aria-describedby="passwordHelp" placeholder="Enter Password">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="exampleInputPassword1">Confirm Password</label>
+                                    <input type="password" class="form-control" name="pass2" id="exampleInputPassword1" placeholder="Confirm Password">
+                                  </div>
+                                  <button type="submit" name="save" class="btn btn-success pull-right">save</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            var table = $("#student-table").DataTable({
+                dom: 'lBftipr',
+                "order": [[0, "asc"]]
+            });
+            $("#send_sms").click(function (event) {
+                event.stopPropagation();
+                // Showing modal
+                $("div#myModal").appendTo("body").modal("show");
+            });
+        });
+    </script>
+{% endblock %}

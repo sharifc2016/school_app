@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'head.html' %}
+    <title>{% block head_title %}{% endblock %}</title>
+
+    {% block extrahead %}
+    {% endblock %}
+</head>
+
+<body class="navbar-fixed sidebar-nav fixed-nav">
+
+{% block navbar %}
+    {% include '../nav.html' %}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'student/side.html' %}
+{% endblock %}
+
+<main class="main">
+    {% block breadcrumb %}
+        {% include '../breadcrumb.html' %}
+    {% endblock %}
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+    <!-- /.conainer-fluid -->
+</main>
+
+{% block aside %}
+    {% include '../aside.html' %}
+{% endblock %}
+
+{% include '../footer.html' %}
+
+{% include '../js.html' %}
+
+<!-- Custom scripts required by this view -->
+{% block script %}
+{% endblock %}
+
+{% block side_script %}
+{% endblock %}
+</body>
+</html>

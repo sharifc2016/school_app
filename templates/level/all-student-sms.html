@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="pull-left">
+                        <h6><b>Level : </b>{{ level_name.name }}<h6>
+                    </div>
+                    <div class="col-md-8">
+                        <b>Total Student :</b> {{ total_student }}
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-warning send_sms" name="send_sms" data-toggle="modal"
+                                    data-target="#myModal" id="send_sms">Select SMS
+                            </button>
+                        <a href="{% url 'level-list' %}" class="btn btn-danger">Back
+                        </a>
+                    </div>
+                </div>
+                <div class="card-block">
+
+                    {% if error_message %}
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <strong> {{ error_message }} </strong>
+                        </div>
+                    {% endif %}
+                    {% if success %}
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <strong> {{ success }} </strong>
+                        </div>
+                    {% endif %}
+                    <div class="col-lg-12">
+                    <input type="hidden" name="msg_id" value="0" id="msg_id_change">
+                        <form method="post" url="">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label class="form-control-label col-md-2">Text</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" rows="10" id="msg_id" name="msg"
+                                              placeholder="enter sms here"
+                                              maxlength="159"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="offset-md-2 col-md-7" id="text-count">
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-success pull-right">Send sms</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">Select SMS</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                {% for m in message %}
+                                    <p><input class="message_text_id" type="radio" id="msg_id" value="{{ m.text }}"
+                                              name="msg"> {{ m.text }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="pull-left" type="button" class="btn btn-danger" data-dismiss="modal">Close
+                        </button>
+                        <button onclick="student_id_list_form_submit()" name="send-sms" data-dismiss="modal" id="select-sms" class="btn btn-success">Done
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $("button#student-list").click(function (e) {
+                e.preventDefault();
+                var listUrl = "{% url 'student_list' %}";
+                window.location.href = listUrl;
+            });
+            var text_Max = 159;
+            $('#text-count').html(text_Max + ' characters remained for sms');
+            $('#sms').keyup(function () {
+                var text_Length = $('#sms').val().length;
+                var text_Remain = text_Max - text_Length;
+                $('#text-count').html(text_Remain + ' characters remained for sms');
+            });
+            $("#send_sms").click(function (event) {
+                event.stopPropagation();
+                // Showing modal
+                $("div#myModal").appendTo("body").modal("show");
+            });
+        });
+
+        function student_id_list_form_submit() {
+            var check_fields = $('.message_text_id');
+            var ln = check_fields.length;
+            var flag = true;
+            for (   i = 0; i < ln; i++) {
+                if (check_fields[i].checked) {
+                    $('#msg_id')[0].value = check_fields[i].value;
+                    flag = false;
+                }
+            }
+
+            if (flag) {
+                alert("Please select a message");
+            } else {
+                $('#select-sms').submit();
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,30 @@
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            {% with name1=user.get_username|slice:"0:1" name2=user.get_username|slice:"0:2" %}
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+
+            <li class="nav-title">
+                Menu
+            </li>
+
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" href="{% url 'student_list' %}"><i class="icon-user-follow"></i> Students</a>#}
+{#            </li>#}
+
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-cursor"></i> Task</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sprofile' %}"><i class="icon-anchor"></i> Task List</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="divider"></li>
+            {% endwith %}
+        </ul>
+        <input type="hidden" id="id_user" value="{{ user.get_username }}">
+    </nav>
+</div>

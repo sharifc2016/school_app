@@ -1,0 +1,79 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong>{{ error }} Class:- {{ level_name.name }} (date:{{ date }})</strong>
+                    </div>
+                {% endif %}
+
+                </div>
+                <div class="card-header">
+                    <div class="pull-left">
+                        <i class="fa fa-list"></i>
+                        Enter Date
+                    </div>
+                </div>
+
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <br>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <label class="col-md-2" for="date-input" style="margin-top:5px">Date</label>
+                                    <div class="col-md-10">
+                                        <input type="text" value="{{ now }}" id="id_date" name="date" placeholder="Enter Date" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5    ">
+                                <button type="submit" name="save" class="btn btn-success pull-right">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!--Jquery ui-->
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <!--Jquery timepicker addon-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <!--Select2-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // date field
+            $("input#id_date").datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '2017:2050',
+            });
+        });
+    </script>
+{% endblock %}
+

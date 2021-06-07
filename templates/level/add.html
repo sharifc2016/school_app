@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="pull-left">
+                        <i class="fa fa-list"></i>
+                        Add Level
+                    </div>
+                </div>
+                <div class="card-block">
+                    <form action="" method="post">
+                    {% csrf_token %}
+                        {% for l in level %}
+                            <div class="form-group row">
+                                <label class="form-control-label col-md-2">{{ l.label }}</label>
+                                <div class="col-md-10">
+                                    {{ l }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                            <div class="pull-right">
+                                <button type="submit" name="save" class="btn btn-success pull-right">Save</button>
+                            </div>
+                            <div class="pull-right" style="margin:0 10px">
+                                <a  href="{% url 'student_list' %}" name="cancel" class="btn btn-warning">Cancel</a>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

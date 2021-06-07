@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+
+    <form id="student_id_list_form" name="migrations_form" action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="msg_id" value="0" id="msg_id_change">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+
+                        <div class="pull-left" style="padding-bottom:10px;">
+                            <i class="fa fa-list"></i>
+                            Student Migrations List
+                        </div>
+                        <div class="pull-right" style="padding-bottom:10px;">
+                            <a href="{% url 'migrations-level' %}" class="btn btn-danger" id="add-students">back
+                            </a>
+                            <input type='Button' class="btn btn-primary" id="check_all" value="Select All">
+                            <!-- Button trigger modal -->
+
+                            <button type="button" name="save" id="send_sms" class="btn btn-success delete-student"
+                                    value="{{ s.id }}">Migrate
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-block">
+
+                            {% if success %}
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong> {{ success }} </strong>
+                                </div>
+                            {% endif %}
+                            {% if error %}
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong> {{ error }} </strong>
+                                </div>
+                            {% endif %}
+                    <div class="" style="padding-bottom:10px;">
+                        <div class="col-md-2"  style="margin-bottom:20px;">
+                            <div class="row">
+                                <strong style="margin-left: 10px;">Migrations From: {{ level }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4"  style="margin-top:-5px;">
+                            <div class="row">
+                                <label class="col-md-5" for="date-input" style="margin-top:5px"><strong>Migrations To :</strong></label>
+                                <div class="col-md-5">
+                                    <select id="id_level" name="level" class="form-control" required>
+                                            <option value="0" selected="selected">Select Level</option>
+                                        {% for l in migrations_to %}
+                                            <option value="{{ l.id }}" id="level" name="level">{{ l.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <table class="table table-striped table-hover" id="student-table">
+                            <thead>
+                            <tr>
+                                <th width="20%" style="text-align:left">Name</th>
+                                <th width="20%">Student Id</th>
+                                <th width="20%">Migration From</th>
+                                <th width="20%">Migration To</th>
+                                <th width="20%">Select Student</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for s in students %}
+                                <tr>
+                                    <td style="text-align:left">
+                                        {{ s.full_name }}
+                                    </td>
+                                    <td>
+                                        {{ s.student_id }}
+                                    </td>
+                                    <td>
+                                        {{ level }}
+                                    </td>
+                                    <td>
+                                        {{ s.admission_year }}
+                                    </td>
+                                    <td>
+                                        <input type='checkbox' value="{{ s.id }}" name="student">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">Student Migrations</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row offset-md-4">
+                            <h4>Are you sure ?</h4>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="pull-left" type="button" class="btn btn-danger" data-dismiss="modal">Cancel
+                        </button>
+                        <button onclick="student_id_list_form_submit()" name="send-sms" class="btn btn-success">Migrate
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+    </form>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+
+            $("#check_all").click(function (e) {
+                e.preventDefault();
+                //$('input:checkbox').not(this).prop('checked', true);
+                var flag = false;
+                $("input:checkbox").each(function () {
+                    var status = $(this).prop("checked");
+                    if(!status) {
+                        flag = true;
+                        $(this).prop("checked", true);
+                    }
+                });
+                if(!flag) {
+                    $("input:checkbox").each(function () {
+                        var status = $(this).prop("checked");
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
+            $("#send_sms").click(function (event) {
+                event.stopPropagation();
+                // Showing modal
+                $("div#myModal").appendTo("body").modal("show");
+            });
+
+        });
+        function student_id_list_form_submit() {
+
+            var value=$("#id_level").val();
+            if(value == 0)
+            {
+                alert("Please Select Migrations Level");
+            }
+            if(value != 0){
+                $('#student_id_list_form').submit();
+            }
+        }
+
+
+    </script>
+{% endblock %}
+047hymk

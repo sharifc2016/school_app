@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+<header class="navbar">
+    <div class="container-fluid">
+        <button class="navbar-toggler mobile-toggler hidden-lg-up" type="button">☰</button>
+        <!--Logo goes here-->
+        <a class="navbar-brand" href="#"></a>
+        <ul class="nav navbar-nav hidden-md-down">
+            <li class="nav-item">
+                <a class="nav-link navbar-toggler layout-toggler" href="#" id="li_nav">☰</a>
+            </li>
+
+            <li class="nav-item px-1">
+                <a class="nav-link" href="#">{{ institution_name }}</a>
+            </li>
+{#                <li class="nav-item px-1">#}
+{#                    <span class="nav-link" id="todays-date"></span>#}
+{#                </li>#}
+        </ul>
+        <ul class="nav navbar-nav float-xs-right hidden-md-down">
+            <!--<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+{#                        <img src="{% static 'img/avatars/6.jpg' %}" class="img-avatar" alt="admin@bootstrapmaster.com">#}
+                    <span class="hidden-md-down">Logout</span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <!-- This is for login user
+                    <a class="dropdown-item icon-login" href="{% url 'login' %}"><i class="fa fa-lock"></i> Login</a>
+                    -->
+                    <!-- This is for Logout user -->
+            <strong><span style="margin-right: 40px;"><a href="{% url 'logout' %}"><i class="fa fa-lock"></i> Logout</a></span></strong>
+
+                    <!--
+                    <div class="dropdown-header text-xs-center">
+                        <strong>Settings</strong>
+                    </div>
+                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+                    <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>
+                    <a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Due Payments<span class="tag tag-default">42</span></a>
+                    -->
+                </div>
+            </li>
+        </ul>
+    </div>
+</header>

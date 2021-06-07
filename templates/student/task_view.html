@@ -1,0 +1,57 @@
+{% extends 'student/base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <style>
+        .image{
+            height:98%;
+            width:99%;
+        }
+        .image img{
+            height:100%;
+            width:100%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Task
+                    <a href="{% url 'list-task' %}" class="btn btn-danger pull-right" id="back">Back</a>
+                </div>
+                </br>
+                <div class="card-block">
+                    <div class="image">
+                         <img src="{{ image_url }}" alt="image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!--Jquery ui-->
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <!--Jquery timepicker addon-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <!--Select2-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // dob field
+            $("input#id_date").datepicker({ dateFormat: 'dd-mm-yy' })
+        });
+    </script>
+{% endblock %}

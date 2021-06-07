@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        {% if error %}
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <strong> {{ error }} </strong>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="pull-left">
+                        <i class="fa fa-list"></i>
+                        Select Task Related Information
+                    </div>
+                    <div class="pull-right">
+                        <a href="{% url 'student_list' %}" class="btn btn-warning">Close</a>
+                    </div>
+                </div>
+
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <br>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <label class="col-md-4" for="date-input" style="margin-top:5px">Class</label>
+                                    <div class="col-md-5">
+
+                                        <select id="select" name="level" class="form-control" required>
+                                            <option value="">Select Task</option>
+                                            {% for c in task %}
+                                                <option value="{{ c.id }}" name="level">{{ c.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <label class="col-md-2" for="date-input" style="margin-top:5px">Date</label>
+                                    <div class="col-md-10">
+                                        <input type="text" placeholder="Enter Date" id="id_date" name="date" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5    ">
+                                <button type="submit" name="save" class="btn btn-success pull-right">View Tasks</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!--Jquery ui-->
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <!--Jquery timepicker addon-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <!--Select2-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // dob field
+            $("input#id_date").datepicker({ dateFormat: 'dd-mm-yy' })
+        });
+    </script>
+{% endblock %}

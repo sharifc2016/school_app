@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}Student|Update{% endblock %}
+
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="pull-left">
+                        <i class="fa fa-edit"></i>
+                        Edit Teacher
+                    </div>
+                    <div class="pull-right">
+                        <a href="{% url 'teacher-list' %}">
+                            <button class="btn btn-danger pull-right" id="student-list-button">Back</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!--Basic form-->
+                        {% for f in form %}
+
+                            <div style="color:#A70006;">{{ f.errors }}</div>
+                            <div class="form-group row">
+                                <label class="form-control-label col-md-2">{{ f.label }}</label>
+                                 <div class="col-md-10">
+                                    {{ f }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="card-footer">
+                            <div class="pull-right">
+                                <button type="submit" name="save" class="btn btn-success pull-right">Save</button>
+                            </div>
+                            <div class="pull-right" style="margin:0 10px">
+                                <a  href="{% url 'student_list' %}" name="cancel" class="btn btn-warning">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    <!--Jquery ui-->
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <!--Jquery timepicker addon-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <!--Select2-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // date field
+            $("input#id_dob").datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1980:2017',
+            });
+            // Contact number validation
+            $('form').submit(function(e) {
+                if (!validatePhone('id_contact')) {
+                    e.preventDefault();
+                    alert('Contact number should contain numeric value [0-9]');
+
+                }
+                if (contactLengthValidation('id_contact')){
+                    e.preventDefault();
+                    alert('Contact number should contain 11 Digit ( example : 01XXXXXXXXX )');
+                }
+
+            });
+        });
+
+        function validatePhone(id_contact) {
+            var a = document.getElementById(id_contact).value;
+
+            var filter = /^[0-9-+]+$/;
+            if (filter.test(a)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        }
+        function contactLengthValidation(id_contact) {
+            var a = document.getElementById(id_contact).value;
+
+            if (a.length != 11){
+                return true
+            }
+            else{
+                return false
+            }
+        }
+    </script>
+{% endblock %}

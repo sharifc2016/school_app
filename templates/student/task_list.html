@@ -1,0 +1,56 @@
+{% extends 'student/base.html' %}
+{% load staticfiles %}
+{% block head_title %}Student|Task{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+
+            <!--Start card-->
+            <div class="card">
+
+            <!--Card header -->
+                <div class="card-header">
+                    <div class="pull-left">
+                        <i class="fa fa-list"></i>
+                        Task list
+                    </div>
+                    <div class="pull-right">
+                        <a href="{% url 'sprofile' %}">
+                            <button style="margin-top:1px;" type="button" name="close"  class="btn btn-success" value="{{ t}}">
+                                Close
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                   <table class="table table-hover" style="table-layout:fixed;word-break:break-all;" id="student-table">
+                        <thead>
+                        <tr>
+                            <th width="10%">Preiod</th>
+                            <th width="20%">Subject</th>
+                            <th width="35%">Class Work</th>
+                            <th width="35%">Home Work</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for t in task %}
+                            <tr>
+                                <td>{{ t.period }}</td>
+                                <td>{{ t.subject }}</td>
+                                <td style="table-layout:fixed;overflow:hidden;white-space: pre-wrap">{{ t.classwork }}</td>
+                                <td style="table-layout:fixed;overflow:hidden;word-wrap:break-word;;white-space: pre-wrap">{{ t.homework}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                   </table>
+                </div>
+
+            <!--End card-->
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

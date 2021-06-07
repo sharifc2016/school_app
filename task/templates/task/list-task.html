@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+    Student list
+{% endblock %}
+
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                {% if success %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong> {{ success }} </strong>
+                    </div>
+                {% endif %}
+                <div class="pull-left">
+                    <i class="fa fa-list"></i>
+                    Task list
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary add_task" id="add_task">Add Task
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-block">
+                <table class="table table-striped table-hover" id="student-table">
+                    <thead>
+                    <tr>
+                        <th style="text-align:center;white-space:nowrap"><span style="float:left">Level</span></th>
+                        <th style="text-align:center;white-space:nowrap"><span style="">Date</span></th>
+                        <th><span style="margin-right:-380px">Action</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in task %}
+                        <tr>
+                        <td style="text-align:left;white-space:nowrap">{{ t.level }}</td>
+                        <td style="text-align:center;white-space:nowrap">{{ t.date|date:"d-m-Y" }}</td>
+                        <td style="text-align:right;white-space:nowrap">
+                            <button type="button" class="btn btn-warning view-task"
+                                    value="{{ t.id }}">View Task
+                            </button>
+                            <button type="button" class="btn btn-info edit-task"
+                                    value="{{ t.id }}">Edit
+                            </button>
+                            <button type="button" name="delete"  class="btn btn-danger delete-student"
+                                    value="{{ t.id }}">Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    <!--Delete Student modal-->
+    <div id="delete-student-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title"></h6>
+                </div>
+                <form action="{% url 'delete-tasks' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="row offset-md-4">
+                            <h4>Are you sure ?</h4>
+                        </div>
+                        <div class="row">
+                            <input type="hidden" name="task_id" id="student-id">
+                        </div>
+                    </div><!--modal body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-success pull-right" name="delete">Yes</button>
+                    </div>
+                </form>
+            </div><!--modal content -->
+        </div><!--modal dialouge -->
+    </div><!-- modal -->
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            var table = $("#student-table").DataTable({
+                dom: 'lBftipr',
+                "order": [[0, "asc"]]
+            });
+
+            // Delete
+            table.on("click", ".delete-student", function (e) {
+                e.preventDefault();
+                var studentId = $(this).val(),
+                    studentName = $(this).closest("tr").find("td:nth-child(1)").text();
+                // Populating header
+                $("div#delete-student-modal").find(".modal-title").empty().append("Deleting " + studentName);
+                // Saving "Student id"
+                $("input#student-id").val(studentId);
+                // Showing modal
+                $("div#delete-student-modal").appendTo("body").modal("show");
+            });
+            // Add Task
+            $(document).on("click", "#add_task", function (e) {
+                e.preventDefault();
+                    studentUrl = location.origin + "/task/add-task/";
+                window.location.href = studentUrl;
+            });
+            // View Task
+            table.on("click", ".view-task", function (e) {
+                e.preventDefault();
+                var taskId = $(this).val(),
+                    taskURL = location.origin + "/task/view/" + taskId;
+                window.location.href = taskURL;
+            });
+            // Edit
+            table.on("click", ".edit-task", function (e) {
+                e.preventDefault();
+                var taskId = $(this).val(),
+                    taskURL = location.origin + "/task/edit/" + taskId;
+                window.location.href = taskURL;
+            });
+        });
+    </script>
+{% endblock %}

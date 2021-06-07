@@ -1,0 +1,84 @@
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            {% with name1=user.get_username|slice:"0:1" name2=user.get_username|slice:"0:2" %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'daseboard' %}"><i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+
+            <li class="nav-title">
+                Menu
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'teacher-list' %}"><i class="icon-feed"></i> Teachers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'student_list' %}"><i class="icon-user-follow"></i> Students</a>
+            </li>
+
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-cursor"></i> Tasks</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'list-task' %}"><i class="icon-anchor"></i>View Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add-task-info' %}"><i class="icon-cursor-move"></i> Add Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'task_list' %}"><i class="icon-cursor-move"></i> Tasks List</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'migrations-level' %}"><i class="icon-hourglass"></i>Migration</a>
+            </li>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-diamond"></i> Attendance</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'attendance' %}"><i class="icon-rocket"></i> Student Attendance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'select-level' %}"><i class="icon-list"></i>Student Absent List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'teacher-attendance' %}"><i class="icon-notebook"></i> Teacher Attendance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'select-date' %}"><i class="icon-shield"></i> Teacher Absent List</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'sms-list' %}"><i class="icon-envelope-open"></i>SMS</a>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-badge"></i> Levels</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'level-list' %}"><i class="icon-globe"></i> Level List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add-level' %}"><i class="icon-feed"></i> Add Level</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-docs"></i> Subjects</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'subject-list' %}"><i class="icon-book-open"></i> Subject List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add-subject' %}"><i class="icon-briefcase"></i> Add Subject</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="divider"></li>
+            {% endwith %}
+        </ul>
+        <input type="hidden" id="id_user" value="{{ user.get_username }}">
+    </nav>
+</div>

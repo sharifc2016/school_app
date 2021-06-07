@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center" style="border:none">
+                <p style="background: #ddd; font-size: 50px;text-align:center;margin:0;padding:0;">No Record Found</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!--Jquery ui-->
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <!--Jquery timepicker addon-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <!--Select2-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // dob field
+            $("input#id_date").datepicker({ dateFormat: 'dd/mm/yy' })
+        });
+    </script>
+{% endblock %}
+
+
+

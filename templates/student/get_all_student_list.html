@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+    Student list
+{% endblock %}
+
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-block">
+                    {% if success %}
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <strong> {{ success }} </strong>
+                        </div>
+                    {% endif %}
+                    <div class="pull-left">
+                        <i class="fa fa-list"></i>
+                        Students full list
+                    </div>
+                    <div class="pull-right">
+                        <a href="{% url 'student_list' %}" class="btn btn-info">Back</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-block">
+                <table class="table table-hover" id="student-table">
+                    <thead>
+                    <tr>
+                        <th style="text-align:left;white-space:nowrap;width:15px;">Name</th>
+                        <th style="text-align:left;white-space:nowrap;width:15px;">Father Name</th>
+                        <th style="text-align:left;white-space:nowrap;width:15px;">Mother Name</th>
+                        <th style="text-align:left;white-space:nowrap;width:10px;">Contact</th>
+                        <th style="text-align:left;white-space:nowrap;width:10px;">Date of birth</th>
+                        <th style="text-align:left;white-space:nowrap;width:20px;">Address</th>
+                        <th style="text-align:left;white-space:nowrap;width:15px;">Remark</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                        <td style="text-align:left;width:15px;table-layout:fixed;overflow:hidden;word-wrap:break-word;;white-space: pre-wrap">{{ student.full_name }}</td>
+                        <td style="text-align:left;width:15px;table-layout:fixed;overflow:hidden;word-wrap:break-word;;white-space: pre-wrap">{{ student.father_name }}</td>
+                        <td style="text-align:left;width:15px;table-layout:fixed;overflow:hidden;word-wrap:break-word;;white-space: pre-wrap">{{ student.mother_name }}</td>
+                        <td style="text-align:left;width:10px;table-layout:fixed;overflow:hidden;word-wrap:break-word;;white-space: pre-wrap">{{ student.contact }}</td>
+                        <td style="text-align:left;width:10px;table-layout:fixed;overflow:hidden;word-wrap:break-word;;white-space: pre-wrap">{{ student.dob }}</td>
+                        <td style="text-align:left;width:20px;table-layout:fixed;overflow:hidden;word-wrap:break-word;;white-space: pre-wrap">{{ student.address }}</td>
+                        <td style="text-align:left;width:15px;table-layout:fixed;overflow:hidden;word-wrap:break-word;;white-space: pre-wrap">{{ student.extra }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+
+
+{% endblock %}
+

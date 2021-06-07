@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+{% load account %}
+<head>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="Tanvir M">
+    <meta property="og:site_name" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content=""/>
+    <meta property="og:url" content="{{ request.path }}">
+    {% block thumbnail %}{% endblock %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <!-- Icons -->
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/simple-line-icons.css' %}">
+    <!-- Main styles for this application -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.min.css' %}">
+
+    {% if not DEBUG %}
+    {% endif %}
+    <title>ITSD Education App: Login</title>
+</head>
+<body>
+
+    <div class="container d-table">
+        <div class="d-100vh-va-middle">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card-group">
+                        <div class="card p-2">
+                            <div class="card-block">
+                                <h1>Login</h1>
+                                <p class="text-muted">Sign In to your account</p>
+
+                                <form class="login" method="POST" action="{% url 'account_login' %}">
+                                  {% csrf_token %}
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><i class="icon-user"></i></span>
+                                        <input autofocus="autofocus" id="id_login" name="login" placeholder="Username" type="text" required="" class="form-control" placeholder="Username">
+                                    </div>
+
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                        <input id="id_password" name="password" placeholder="Password" type="password" required="" class="form-control" placeholder="Password">
+                                    </div>
+                                    <div class="input-group mb-2">
+                                        <label for="id_remember">
+                                            <input id="id_remember" name="remember" type="checkbox"> Remember Me
+                                        </label>
+                                    </div>
+                                  {% if redirect_field_value %}
+                                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                                  {% endif %}
+                                  <div class="row">
+                                        <div class="col-xs-6">
+                                            <button type="submit" class="btn btn-primary px-2">Login</button>
+                                        </div>
+{#                                        <div class="col-xs-6 text-xs-right">#}
+{#                                            <a class="btn btn-link px-0" href="{% url 'account_reset_password' %}">Forgot password?</a>#}
+{#                                        </div>#}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and necessary plugins -->
+    <script src="{% static 'js/libs/jquery.min.js' %}"></script>
+    <script src="{% static 'js/libs/tether.min.js' %}"></script>
+    <script src="{% static 'js/libs/bootstrap.min.js' %}"></script>
+</body>
+</html>

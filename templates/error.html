@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-md-12">
+                    <div class="col-md-8">
+                        <i class="fa fa-list"></i>
+
+                    </div>
+                    <div class="col-md-4">
+                        Page not found
+                    </div>
+                </div>
+            </div>
+            <div class="card-block">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+        $(document).ready(function () {
+            var table = $("#school-table").DataTable({
+                dom: 'lBftipr',
+                "order": [[0, "asc"]]
+            });
+        });
+
+
+</script>
+{% endblock %}

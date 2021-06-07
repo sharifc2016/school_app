@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load avatar_tags %}
+
+{% block head_title %} Seed CRM {% endblock %}
+
+{% block content %}
+    {% include 'demo.html' %}
+{% endblock %}
+
+{% block script %}
+<script>
+        $(document).ready(function () {
+
+            // Today's batch
+            $("table#today-batch").DataTable({
+                dom: 'lBftipr',
+                "order": [[1, "asc"]]
+            }); // Today's batch
+            // Today's exams
+            $("table#today-exam").DataTable({
+                dom: 'lBftipr',
+                "order": [[1, "asc"]]
+            }); // Today's exam
+            // Pending results
+            $("table#pending-results").DataTable({
+                dom: 'lBftipr',
+                "order": [[1, "asc"]]
+            }); // Pending results
+            // Published results
+            $("table#published-results").DataTable({
+                dom: 'lBftipr',
+                "order": [[1, "asc"]]
+            }); // Published results
+        });
+
+</script>
+{% endblock %}
+

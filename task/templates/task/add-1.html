@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+
+                <div class="card-header">
+                                    {% if task_level %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong> Task Already Exist On This Date </strong>
+                    </div>
+                {% endif %}
+                {% if url %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong> {{ url }} </strong>
+                    </div>
+                {% endif %}
+                {% if success %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong> {{ success }} </strong>
+                    </div>
+                {% endif %}
+                    Add Task
+                    <button class="btn btn-danger pull-right" id="student-list-button">Close</button>
+                </div>
+
+                <div class="card-block">
+                    <form method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <br>
+                        {% for f in form %}
+
+                            <div style="color:#A70006;">{{ f.errors }}</div>
+                            <div class="form-group row">
+                                <label class="form-control-label col-md-2">{{ f.label }}</label>
+                                 <div class="col-md-10">
+                                    {{ f }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="col-md-12">
+                            <button type="submit" name="save-1" class="btn btn-success pull-right">Add Tasks</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!--Jquery ui-->
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <!--Jquery timepicker addon-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <!--Select2-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // dob field
+            $("input#id_date").datepicker({ dateFormat: 'dd-mm-yy' })
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}ITSD coaching app{% endblock %}
+{% block extrahead %}
+    <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Add Task
+                </div>
+
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <br>
+
+                    <table class="table table-bordered table-hover" id="student-table">
+                        <thead>
+                        <tr>
+                            <th width="10%">Preiod</th>
+                            <th width="20%">Subject</th>
+                            <th width="35%">Class Work</th>
+                            <th width="35%">Home Work</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    1st
+                                </td>
+                                <td>
+                                    <select id="select" name="subject" class="form-control">
+                                        {% for s in subject %}
+                                            <option value="{{ s.id }}" name="subject">{{ s.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <textarea id="textarea-input" name="cwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                </td>
+                                <td>
+                                    <div class="col-md-12" style="margin-bottom:10px">
+                                        <textarea id="textarea-input" name="hwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    2nd
+                                </td>
+                                <td>
+                                    <select id="select" name="subject" class="form-control">
+                                        {% for s in subject %}
+                                            <option value="{{ s.id }}" name="subject">{{ s.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <textarea id="textarea-input" name="cwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                </td>
+                                <td>
+                                    <div class="col-md-12" style="margin-bottom:10px">
+                                        <textarea id="textarea-input" name="hwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    3rd
+                                </td>
+                                <td>
+                                    <select id="select" name="subject" class="form-control">
+                                        {% for s in subject %}
+                                            <option value="{{ s.id }}" name="subject">{{ s.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <textarea id="textarea-input" name="cwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                </td>
+                                <td>
+                                    <div class="col-md-12" style="margin-bottom:10px">
+                                        <textarea id="textarea-input" name="hwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    4th
+                                </td>
+                                <td>
+                                    <select id="select" name="subject" class="form-control">
+                                        {% for s in subject %}
+                                            <option value="{{ s.id }}" name="subject">{{ s.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <textarea id="textarea-input" name="cwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                </td>
+                                <td>
+                                    <div class="col-md-12" style="margin-bottom:10px">
+                                        <textarea id="textarea-input" name="hwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    5th
+                                </td>
+                                <td>
+                                    <select id="select" name="subject" class="form-control">
+                                        {% for s in subject %}
+                                            <option value="{{ s.id }}" name="subject">{{ s.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <textarea id="textarea-input" name="cwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                </td>
+                                <td>
+                                    <div class="col-md-12" style="margin-bottom:10px">
+                                        <textarea id="textarea-input" name="hwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    6th
+                                </td>
+                                <td>
+                                    <select id="select" name="subject" class="form-control">
+                                        {% for s in subject %}
+                                            <option value="{{ s.id }}" name="subject">{{ s.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <textarea id="textarea-input" name="cwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                </td>
+                                <td>
+                                    <div class="col-md-12" style="margin-bottom:10px">
+                                        <textarea id="textarea-input" name="hwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    7th
+                                </td>
+                                <td>
+                                    <select id="select" name="subject" class="form-control">
+                                        {% for s in subject %}
+                                            <option value="{{ s.id }}" name="subject">{{ s.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <textarea id="textarea-input" name="cwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                </td>
+                                <td>
+                                    <div class="col-md-12" style="margin-bottom:10px">
+                                        <textarea id="textarea-input" name="hwork" style="margin-bottom:5px" rows="3" class="form-control" placeholder="Content.."></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="card-footer">
+                        <button type="submit" name="save" class="btn btn-success pull-right">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!--Jquery ui-->
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <!--Jquery timepicker addon-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <!--Select2-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // dob field
+            $("input#id_date").datepicker({ dateFormat: 'dd/mm/yy' })
+        });
+    </script>
+{% endblock %}
+

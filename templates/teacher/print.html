@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+    <head>
+    <title>Teacher Details</title>
+        <!--Jquery ui datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--Jquery ui timepicker addon-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <!--select2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+
+    </head>
+<body>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div>
+                {% if password %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong> {{ password }} </strong>
+                {% endif %}
+            </div>
+            <div>
+                {% if password1 %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong> {{ password1 }} </strong>
+                {% endif %}
+            </div>
+            <div class="card-header">
+                <strong>Details of {{ teacher.full_name }}</strong>
+                <a href="{% url 'teacher-list' %}">
+                    <button type="button" class="btn btn-outline-danger pull-right" id="teacher-list">Back
+                    </button>
+                </a>
+               <button type="button" class="btn btn-info send_sms pull-right" style="margin-right:10px;" name="send_sms" data-toggle="modal"
+                     data-target="#myModal" id="send_sms">Change Password
+               </button>
+                <a class="btn btn-info" href="#">print</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<body class="row">
+    <div class="card">
+        <div class="col-sm-9">
+        <!--This is for teacher details-->
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Username</strong>
+                    </div>
+                    <div class="col-md-8">
+                        :&nbsp;{{ teacher.full_name }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Teacher ID</strong>
+                    </div>
+                    <div class="col-md-8">
+                        :&nbsp;{{ teacher.teacher_id }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Date of birth</strong>
+                    </div>
+                    <div class="col-md-8">
+                        :&nbsp;{{ teacher.dob }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Join year</strong>
+                    </div>
+                    <div class="col-md-8">
+                        :&nbsp;{{ teacher.join_year }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Father's name</strong>
+                    </div>
+                    <div class="col-md-8">
+                        :&nbsp;{{ teacher.father_name }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Mother's name</strong>
+                    </div>
+                    <div class="col-md-8">
+                        :&nbsp;{{ teacher.mother_name }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Contact</strong>
+                    </div>
+                    <div class="col-md-8">
+                        :&nbsp;{{ teacher.contact }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Address</strong>
+                    </div>
+                    <div class="col-md-8">
+                        :&nbsp;{{ teacher.address }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Remark</strong>
+                    </div>
+                    <div class="col-md-8">
+                        :&nbsp;{{ teacher.extra }}
+                    </div>
+                </div>
+
+            <!--This is for teacher image-->
+        <div class="col-sm-3">
+            <img width="10%" src="{{ teacher.image.url }}" alt="teacher image">
+        </div>
+    </div>
+</div>
+
+
+    <!--Delete teacher modal-->
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">Change Password</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <form action="{% url 'teacher-details' teacher.id %}" method="post">
+                                    {% csrf_token %}
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1">Password</label>
+                                    <input type="password" class="form-control" name="pass1" id="password" aria-describedby="passwordHelp" placeholder="Enter Password">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="exampleInputPassword1">Confirm Password</label>
+                                    <input type="password" class="form-control" name="pass2" id="exampleInputPassword1" placeholder="Confirm Password">
+                                  </div>
+                                  <button type="submit" name="save" class="btn btn-success pull-right">save</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#teacher-table").DataTable({
+                dom: 'lBftipr',
+                "order": [[0, "asc"]]
+            });
+            $("#send_sms").click(function (event) {
+                event.stopPropagation();
+                // Showing modal
+                $("div#myModal").appendTo("body").modal("show");
+            });
+        });
+    </script>
+</body>
+</html>
